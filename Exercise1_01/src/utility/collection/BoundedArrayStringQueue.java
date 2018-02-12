@@ -43,6 +43,7 @@ public class BoundedArrayStringQueue implements StringQueueADT
       if(!isEmpty())
       {
          String first=first();
+         queue[front]=null;
          front++;
          return first;
       }
