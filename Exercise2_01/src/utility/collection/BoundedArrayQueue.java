@@ -13,7 +13,7 @@ public class BoundedArrayQueue<T> implements QueueADT<T>{
 	   }
 	   public int size()
 	   {
-	      return count;
+	      return queue.length-front;
 	   }
 	   public boolean isEmpty()
 	   {
