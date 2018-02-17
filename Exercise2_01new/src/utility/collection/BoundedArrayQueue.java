@@ -65,6 +65,10 @@ public class BoundedArrayQueue<T> implements QueueADT<T>{
 	
 	public int indexOf (T element)
 	{
+		if (size()<1)
+		{
+			return -1;
+		}
 		int tempfront = front; 			//temporal front
 		int index = 0;
 		while (tempfront != count)
