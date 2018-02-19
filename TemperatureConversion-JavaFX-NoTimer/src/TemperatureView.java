@@ -33,7 +33,15 @@ public class TemperatureView extends Application
       this.clock = clock;
       this.eventHandler = new TemperatureEventHandlers(model);
 
-      Application.launch(this.getClass());
+      Start startView = new Start(this);
+      Thread viewThread = new Thread(startView);
+      viewThread.start();
+      
+      Timer timer = new Timer(clock, this);
+      Thread timerThread = new Thread(timer);
+      timerThread.setDaemon(true);
+      timerThread.start();
+      
    }
 
    @Override
