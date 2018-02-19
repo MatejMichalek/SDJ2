@@ -1,8 +1,10 @@
+import java.io.Console;
 
 public class BurgerBar {
 
 	private int numberOfBurgers;
 	private int maxNumberOfBurgers;
+	private int allHasEaten=0;
 	
 	public BurgerBar (int maxNoOfBurgers)
 	{
@@ -26,6 +28,7 @@ public class BurgerBar {
 				//..
 			}		
 		}
+		notifyAll();
 		numberOfBurgers++;
 		System.out.println("Burger is prepared by "+employeeName+numberOfBurgers);
 	}
@@ -46,12 +49,25 @@ public class BurgerBar {
 				//..
 			}
 		}
+		notifyAll();
 		numberOfBurgers--;
 		System.out.println("Burger is eaten by "+who+numberOfBurgers);
+		
 	}
 	
 	public synchronized int getNumberOfBurgers()
 	{
 		return numberOfBurgers;
+	}
+	public synchronized void setAllHasEaten(int whatever)
+	{
+		allHasEaten=whatever;
+		System.out.println("Has eaten equals "+allHasEaten);
+		if(allHasEaten==5)
+			System.exit(0);
+	}
+	public synchronized int getAllHasEaten()
+	{
+		return allHasEaten;
 	}
 }

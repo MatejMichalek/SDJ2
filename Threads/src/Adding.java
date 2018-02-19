@@ -30,6 +30,7 @@ public class Adding implements Runnable {
 				print+=id+"; ";
 				print+=list;
 				Thread.sleep(sleepTime);
+				System.out.println(print);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

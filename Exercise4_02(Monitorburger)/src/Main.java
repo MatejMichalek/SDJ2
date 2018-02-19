@@ -5,7 +5,7 @@ public class Main {
 		BurgerBar bar = new BurgerBar(10);
 		BurgerBarEmployee emp1 = new BurgerBarEmployee("Kate", bar);
 		BurgerBarEmployee emp2 = new BurgerBarEmployee("John", bar);
-		BurgerBarCostumer cost1 = new BurgerBarCostumer(2, "Ginny", bar);
+		BurgerBarCostumer cost1 = new BurgerBarCostumer(1, "Ginny", bar);
 		BurgerBarCostumer cost2 = new BurgerBarCostumer(3, "Harry", bar);
 		BurgerBarCostumer cost3 = new BurgerBarCostumer(4, "Hermione", bar);
 		BurgerBarCostumer cost4 = new BurgerBarCostumer(5, "Ron", bar);
