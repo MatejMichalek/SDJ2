@@ -67,6 +67,6 @@ public class Student {
 	
 	public String toString() 
 	{
-		return "Student ID: "+id+"\nName: "+fName+" "+lName+"\nClass: "+studentClass+"\nParent ID: "+parentId+"Is active? "+isActive;
+		return "Student ID: "+id+"\nName: "+fName+" "+lName+"\nClass: "+studentClass+"\nParent ID: "+parentId+"\nIs active? "+isActive;
 	}
 }

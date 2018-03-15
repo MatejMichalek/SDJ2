@@ -7,7 +7,8 @@ public class Adapter implements AdapterInterface {
 
 	private MyDatabase db;
 	private static final String DRIVER = "org.postgresql.Driver";
-	private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
+	//private static final String URL = "	jdbc:postgresql://localhost:5432/postgres?currentSchema=enteschema";
+	private static final String URL = "jdbc:postgresql://localhost:5432/entedemo";
 	private static final String USER = "postgres";
 	private static final String PASSWORD = "3721151327";
 
@@ -45,20 +46,30 @@ public class Adapter implements AdapterInterface {
 
 	@Override
 	public void save(Student student) throws SQLException {
-		String sql = "INSERT INTO Students (";
+		String sql = "INSERT INTO Students (id,fName,lName,class,parentId,active) VALUES (";
 		sql += student.getId()+",'";
 		sql += student.getfName()+"','";
 		sql += student.getlName()+"',";
 		sql += student.getStudentClass()+",";
 		sql += student.getParentId()+",";
 		sql += student.isActive()+")";
-		System.out.println("Number of updates for given student("+student.getId()+"): "+db.update(sql));
+		/*Object[] studentData = new Object[6];
+		studentData[0]=student.getId();
+		studentData[1]=student.getfName();
+		studentData[2]=student.getlName();
+		studentData[3]=student.getStudentClass();
+		studentData[4]=student.getParentId();
+		studentData[5]=student.isActive();
+		db.update(sql,studentData);*/
+		int noOfUpdates = db.update(sql);
+		System.out.println("Number of updates for given student("+student.getfName()+" "+student.getfName()+"): "+noOfUpdates);
 	}
 
 	@Override
 	public void remove(Student student) throws SQLException {
-		String sql = "DELETE FROM Students WHERE studentId="+student.getId();
-		System.out.println("Number of updates for given student("+student.getId()+"): "+db.update(sql));
+		String sql = "DELETE FROM Students WHERE id="+student.getId();
+		int noOfUpdates = db.update(sql);
+		System.out.println("Number of updates for given student("+student.getfName()+" "+student.getfName()+"): "+noOfUpdates);
 	}
 
 	@Override
@@ -72,7 +83,8 @@ public class Adapter implements AdapterInterface {
 	@Override
 	public void clear() throws SQLException {
 		String sql = "DELETE FROM Students";
-		System.out.println("Data deleted, number of updates "+db.update(sql));
+		db.update(sql);
+		//System.out.println("Data deleted, number of updates "+db.update(sql,1));
 	}
 
 }

@@ -2,6 +2,7 @@ package utility.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,15 +20,57 @@ public class MyDatabase {
 		this.url = url;
 		this.user = user;
 		this.password = password;
+		con = null;
 		Class.forName(driver);
-		con = DriverManager.getConnection(url, user, password);
+		//con = DriverManager.getConnection(url, user, password);
+	}
+
+	public void openDatabase() throws SQLException
+	{
+		con = DriverManager.getConnection(url,user,password);
+        System.out.println("Database open ok");
+	}
+	
+	public void closeDatabase() throws SQLException
+	{
+		con.close();
 	}
 	
 	public ArrayList<Object[]> query(String sql) throws SQLException
 	{
-		ArrayList<Object[]> list = new ArrayList<>();
-		//Statement stmt = (Statement) statementElements;
-		Statement stmt = con.createStatement();
+		openDatabase();
+		
+		Statement statement = null;
+		ArrayList<Object[]> list = null;
+		ResultSet resultSet = null;
+		if (sql != null && statement == null)
+	    {
+	      statement = con.createStatement();
+	      /*if (statementElements != null)
+	      {
+	        for (int i = 0; i < statementElements.length; i++)
+	          statement.setObject(i + 1, statementElements[i]);
+	      }*/
+	    }
+	    resultSet = statement.executeQuery(sql);
+	    list = new ArrayList<Object[]>();
+	    while (resultSet.next())
+	    {
+	      Object[] row = new Object[resultSet.getMetaData().getColumnCount()];
+	      for (int i = 0; i < row.length; i++)
+	      {
+	        row[i] = resultSet.getObject(i + 1);
+	      }
+	      list.add(row);
+	    }
+	    if (resultSet != null)
+	      resultSet.close();
+	    if (statement != null)
+	      statement.close();
+	    closeDatabase();
+	    return list;
+		
+		/*Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery(sql);
 		while (rs.next())
 		{
@@ -40,23 +83,50 @@ public class MyDatabase {
 			objs[5]=rs.getBoolean(6);
 			list.add(objs);
 		}
-		return list;
+		return list;*/
 	}
+	
 	
 	public int update (String sql) throws SQLException
 	{
-		Statement stmt = con.createStatement();
+		openDatabase();
+	    Statement statement = con.createStatement();
+	    /*if (statementElements != null)
+	    {
+	      for (int i = 0; i < statementElements.length; i++)
+	        statement.setObject(i + 1, statementElements[i]);
+	    }*/
+
+	    int result = statement.executeUpdate(sql);
+
+	    closeDatabase();
+	    return result;
+	  
+		/*Statement stmt = con.createStatement();
 		stmt.executeQuery(sql);
-		return stmt.getUpdateCount();
+		return stmt.getUpdateCount();*/
 	}
 	
 	public int[] updateAll(ArrayList<String> sqlList) throws SQLException
 	{
-		int[] array = new int[sqlList.size()];
+		if (sqlList == null)
+		      return null;
+
+		openDatabase();
+		int[] results = new int[sqlList.size()];
+		for (int i = 0; i < sqlList.size(); i++)
+		{
+		   PreparedStatement statement = con.prepareStatement(sqlList.get(i));
+		   results[i] = statement.executeUpdate();
+		}
+		closeDatabase();
+		return results;
+		
+		/*int[] array = new int[sqlList.size()];
 		for (int i=0;i<sqlList.size();i++)
 		{
 			array[i]= update(sqlList.get(i));
 		}
-		return array;
+		return array;*/
 	}
 }
