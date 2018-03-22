@@ -8,9 +8,9 @@ public class Adapter implements AdapterInterface {
 	private MyDatabase db;
 	private static final String DRIVER = "org.postgresql.Driver";
 	//private static final String URL = "	jdbc:postgresql://localhost:5432/postgres?currentSchema=enteschema";
-	private static final String URL = "jdbc:postgresql://localhost:5432/entedemo";
-	private static final String USER = "postgres";
-	private static final String PASSWORD = "3721151327";
+	private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
+	private static final String USER = "ente";
+	private static final String PASSWORD = "ente";
 
 	
 	public Adapter() throws ClassNotFoundException, SQLException
