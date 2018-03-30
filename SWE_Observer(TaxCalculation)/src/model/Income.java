@@ -1,3 +1,4 @@
+package model;
 
 public class Income {
 
@@ -7,7 +8,7 @@ public class Income {
 	public Income(double amount)
 	{
 		this.amount = amount;
-		tax = new TaxCalculation()
+		tax = new TaxCalculation(12.5);
 	}
 	
 	public double getAmount()
@@ -22,11 +23,16 @@ public class Income {
 	
 	public double getTax()
 	{
-		return tax;
+		return tax.getTax();
 	}
 	
-	public void update()
+	public void update(TaxCalculation tax)
 	{
-		
+		this.tax = tax;
+	}
+	
+	public double getAmountOfTax()
+	{
+		return (tax.getTax()/100)*amount;
 	}
 }
