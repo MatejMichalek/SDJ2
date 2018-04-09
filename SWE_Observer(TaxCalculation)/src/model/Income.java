@@ -1,6 +1,6 @@
 package model;
 
-public class Income {
+public class Income implements Observer{
 
 	private double amount;
 	private TaxCalculation tax;

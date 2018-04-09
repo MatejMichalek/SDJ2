@@ -1,14 +1,14 @@
 package model;
 import java.util.ArrayList;
 
-public class TaxCalculation {
+public class TaxCalculation implements Subject {
 	private double tax;
-	private ArrayList<Income> incomes;
+	private ArrayList<Observer> incomes;
 	
 	public TaxCalculation(double tax)
 	{
 		this.tax=tax;
-		incomes=new ArrayList<Income>();
+		incomes=new ArrayList<Observer>();
 	}
 	public double getTax()
 	{
@@ -21,22 +21,22 @@ public class TaxCalculation {
 		notifyIncomes();
 	}
 	
-	public void addIncome(Income income)
+	public void addIncome(Observer obs)
 	{
-		incomes.add(income);
-		income.update(this);
+		incomes.add(obs);
+		obs.update(this);
 	}
 	
-	public void removeIncome(Income income)
+	public void removeIncome(Observer obs)
 	{
-		for(Income i:incomes)
-			if(i.equals(income))
+		for(Observer i:incomes)
+			if(i.equals(obs))
 				incomes.remove(i);
 	}
 	
 	public void notifyIncomes()
 	{
-		for(Income i:incomes)
+		for(Observer i:incomes)
 			i.update(this);
 	}
 }
