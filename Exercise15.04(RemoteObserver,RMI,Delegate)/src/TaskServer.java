@@ -9,17 +9,14 @@ import javax.sound.sampled.DataLine;
 
 import utility.observer.AbstractRemoteSubject;
 import utility.observer.RemoteObserver;
-import utility.observer.RemoteSubjectDelegate;
 
-public class TaskServer implements RemoteTaskList{
+public class TaskServer extends AbstractRemoteSubject<String> implements RemoteTaskList{
 
 	private TaskList tasks;
-	private RemoteSubjectDelegate<String> delegate;
 	
 	public TaskServer() throws RemoteException
 	{
 		tasks = new TaskList();
-		delegate = new RemoteSubjectDelegate<>(this);
 	}
 	
 	public static void main(String[] args) throws RemoteException, MalformedURLException {
@@ -33,7 +30,7 @@ public class TaskServer implements RemoteTaskList{
 	@Override
 	public void add(String task) throws RemoteException {
 		tasks.addTask(task);
-		delegate.notifyObservers(task);
+		notifyObservers(task);
 		System.out.println(task+" added");
 	}
 
@@ -41,24 +38,12 @@ public class TaskServer implements RemoteTaskList{
 	public String remove() throws RemoteException {
 		String sth=tasks.getAndRemoveNextTask();
 		System.out.println(sth);
-		delegate.notifyObservers(sth);
+		notifyObservers(sth);
 		return sth;
 	}
 
 	@Override
 	public int size() throws RemoteException {
 		return tasks.size();
-	}
-
-	@Override
-	public void addObserver(RemoteObserver<String> o) throws RemoteException {
-		delegate.addObserver(o);
-		
-	}
-
-	@Override
-	public void deleteObserver(RemoteObserver<String> o) throws RemoteException {
-		delegate.deleteObserver(o);
-		
 	}
 }
