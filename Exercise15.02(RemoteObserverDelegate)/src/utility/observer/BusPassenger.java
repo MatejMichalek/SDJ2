@@ -1,7 +1,9 @@
+package utility.observer;
+import java.rmi.RemoteException;
 import java.util.Observable;
 import java.util.Observer;
 
-public class BusPassenger implements Observer{
+public class BusPassenger implements RemoteObserver<String>{
 	private String name;
 	private Bus bus;
 	private boolean newPassenger;
@@ -24,7 +26,7 @@ public class BusPassenger implements Observer{
 		return bus;
 	}
 
-	public void getIn(Bus bus) {
+	public void getIn(Bus bus) throws RemoteException {
 		if (this.bus != null)
 			getOut();
 		this.bus = bus;
@@ -33,7 +35,7 @@ public class BusPassenger implements Observer{
 		bus.addObserver(this);
 	}
 
-	public void getOut() {
+	public void getOut() throws RemoteException {
 		newPassenger = false;
 		bus.deleteObserver(this);
 		bus.passengerGettingOut(this);
@@ -68,8 +70,8 @@ public class BusPassenger implements Observer{
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
-		showMessage(arg.toString());
+	public void update(RemoteSubject<String> subject, String updateMsg) throws RemoteException {
+		showMessage(updateMsg);
 		
 	}
 }
