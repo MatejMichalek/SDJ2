@@ -8,7 +8,7 @@ public class BurgerBar {
 	
 	public BurgerBar (int maxNoOfBurgers)
 	{
-		maxNumberOfBurgers = maxNoOfBurgers;
+		this.maxNumberOfBurgers = maxNoOfBurgers;
 		numberOfBurgers = 0;
 	}
 	
