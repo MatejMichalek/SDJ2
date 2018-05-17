@@ -10,7 +10,6 @@ public class RemoteMessageClient implements Serializable{
 	private RemoteMessageList list;
 	
 	public RemoteMessageClient(String msg) throws Exception{
-		super();
 		list=(RemoteMessageList) Naming.lookup("rmi://localhost:1099/addMessage");
 		list.addMessage(msg);
 	}
